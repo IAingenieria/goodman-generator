@@ -1,0 +1,28 @@
+# Credenciales y tokens
+gsc_credentials.json
+gsc_token.json
+
+# API Keys (si están en archivos separados)
+*.env
+.env.local
+
+# Archivos de salida temporales
+output/
+reporte_*.json
+analisis_*.json
+
+# Keywords generadas (pueden regenerarse)
+keywords.txt
+keywords_blog.txt
+keywords_retry.txt
+keywords_ambassador.csv
+
+# CSVs de GSC (datos sensibles)
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
