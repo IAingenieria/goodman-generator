@@ -1,133 +1,45 @@
-# Goodman Tech — Contexto del Proyecto
+# 🤖 Goodman Tech — Generador Automático de Landing Pages SEO
+## README de contexto para Claude
+
+> **Propósito de este archivo:** Dar contexto completo al asistente en conversaciones nuevas.
+> Comparte este archivo al inicio de cada sesión.
 
 ---
 
-## Sesión 04/04/2026 — SEO Ambassador v3 + Bot Telegram
+## ¿Qué es este proyecto?
 
-### Lo que se construyó esta sesión
+Sistema para generar landing pages SEO y artículos de blog de forma automática para **Goodman Tech**, empresa de consultoría de IA con sede en Monterrey, NL. El objetivo es posicionar decenas de keywords sobre IA empresarial en México sin trabajo manual.
 
-**Módulo SEO Ambassador v3** (`detectar_keywords_ambassador.py`)
-- Fuente 1: Google Search Console API
-- Fuente 2: Google Suggest público
-- Fuente 3: Google Trends (pytrends)
-- Fuente 4: SerpApi Autocomplete — keywords reales de Google MX
-- Fuente 5/6: SerpApi Related Searches + People Also Ask
-- Fuente 7: Claude API — gaps, clusters, ángulos estratégicos
-- Output: `keywords.txt`, `keywords_blog.txt`, `analisis_claude.json` 
-
-**Bot Telegram Ambassador** (`bot_goodman.py` v2)
-- Comandos: /estado, /alertas, /keywords, /siguiente, /pendientes, /generadas, /agregar
-- Botones: ✅ Landing, 📝 Blog, ✏️ Editar, ❌ Rechazar, ⏭️ Siguiente
-- Monitor automático de indexación cada 24h
-- Resumen diario a las 9am
-- Fix Python 3.14: asyncio.set_event_loop(asyncio.new_event_loop())
-- Token: variable de entorno TELEGRAM_TOKEN
-
-**Analizador de indexación** (`gsc_indexacion.py`)
-- Lee CSVs exportados de GSC sin necesidad de API
-- Genera alertas y recomendaciones automáticas
-- Output: `reporte_indexacion.json` 
-
-**26 landing pages generadas y desplegadas**
-- Todas en `src/pages/Empresas*.tsx` 
-- Rutas registradas en `App.tsx` 
-- Commit y push a GitHub: hash `69747aa` 
-
-### Errores corregidos en generar_landing.py
-
-**Error 1 — Placeholder inválido `{% for each stat %}`**
-- Afectó 7 archivos tsx
-- Fix: reemplazar con array + `.map()` 
-- Prevenido en prompt de Claude con reglas explícitas
-
-**Error 2 — Constante SLATE5 no definida**
-- Fix: declarar todas las constantes al inicio
-- Constantes obligatorias agregadas al prompt:
-```
-  const DARK   = '#0F172A';
-  const CARD   = '#1e293b';
-  const BLUE   = '#2463eb';
-  const YELLOW = '#FACC15';
-  const GREEN  = '#4ade80';
-  const SLATE5 = '#64748b';
-  const SLATE3 = '#cbd5e1';
-  const SLATE4 = '#94a3b8';
-```
-
-**Error 3 — CSS clip-path cortando títulos**
-- Fix: reducir de 10% a 5% en `.cnp-diagonal-top` 
-- Archivo: `src/index.css` línea 299
-
-**Error 4 — UnicodeEncodeError en Windows**
-- Fix permanente:
-```powershell
-  [System.Environment]::SetEnvironmentVariable("PYTHONIOENCODING", "utf-8", "User")
-```
-
-### Configuraciones completadas
-
-- `gsc_credentials.json` configurado en goodman_generator
-- Google Search Console API habilitada en Google Cloud
-- Sitemap enviado a GSC con 26+ URLs
-- 15 páginas con noindex eliminado y desbloqueadas para Google
-
-### Pendientes próxima sesión
-
-- [ ] Crear `actualizar_sitemap.py` — actualización automática tras cada generación
-- [ ] Agregar seeds de Claude/Anthropic al detector de keywords:
-```python
-  "claude ia empresas",
-  "claude anthropic méxico",
-  "claude code automatización",
-  "claude vs chatgpt empresas",
-  "implementar claude empresa",
-  "claude api monterrey",
-  "anthropic claude español",
-  "claude para manufactura",
-```
-- [ ] Generar landing pages específicas de Claude:
-  - `claude-para-empresas-mexico` 
-  - `claude-code-monterrey` 
-  - `implementar-claude-en-mi-empresa` 
-- [ ] Verificar en GSC en 48h cuántas páginas nuevas se indexaron
-- [ ] Integrar `actualizar_sitemap.py` en `generar_lote.py` 
-
-### Comandos clave para arrancar la próxima sesión
-```powershell
-# Iniciar bot
-cd C:\Users\Dell\Documents\goodman_generator
-$env:TELEGRAM_TOKEN = "8743817840:AAG4o964NuLUxFgbLn_aYfYbWbEQfMXa08s"
-$env:SERPAPI_KEY = "4b12977c0516981972e98be6d02f960068883a24a6cd05de84026ae3a4671930"
-$env:ANTHROPIC_API_KEY = "sk-ant-api03-..."
-python bot_goodman.py
-
-# Detectar keywords nuevas
-python detectar_keywords_ambassador.py --auto --top 15 --csv
-
-# Ver estado de indexación
-python gsc_indexacion.py
-```
-
-### Estado del sitio al cierre de sesión
-- Páginas indexadas: 8 (36.4%)
-- Páginas sin indexar: 14
-- Tendencia: 📉 bajando (esperamos mejora en 7 días)
-- Impresiones 7 días: 74
-- Sitemap enviado: ✅ confirmado por Google
+**Stack:**
+- Backend: Python 3.12+
+- Frontend: React + Vite + TypeScript (.tsx)
+- IA: Claude API (modelo claude-sonnet-4-6)
+- Proyecto React en: C:\Users\Dell\CascadeProjects\Godman_Webpage\Godman_Webpage
+- Generador en: C:\Users\Dell\Documents\goodman_generator
+- IDE: Windsurf (Cascade)
+- OS: Windows 11
 
 ---
 
-## Estado al 04/04/2026 13:40 — LEER ANTES DE CUALQUIER SESIÓN
+## Repositorios GitHub
+
+- Sitio web: https://github.com/IAingenieria/Godman_Webpage
+- Generador: https://github.com/IAingenieria/goodman-generator
+
+---
+
+## Estado al 04/04/2026 — LEER ANTES DE CUALQUIER SESIÓN
 
 ### Qué funciona HOY
 
-| Sistema | Estado | Comando para iniciar |
-|---------|--------|---------------------|
-| Bot Telegram | ✅ | `python bot_goodman.py` |
-| Generador de landings | ✅ | `python generar_landing.py "keyword"` |
-| Detector de keywords | ✅ | `python detectar_keywords_ambassador.py --auto --top 15 --csv` |
-| Analizador GSC | ✅ | `python gsc_indexacion.py` |
-| Sitio web React | ✅ | `npm run dev` en Godman_Webpage |
+| Sistema | Estado | Comando |
+|---------|--------|---------|
+| Bot Telegram | ✅ | python bot_goodman.py |
+| Generador landings | ✅ | python generar_landing.py "keyword" |
+| Detector keywords | ✅ | python detectar_keywords_ambassador.py --auto --top 15 --csv |
+| Analizador GSC | ✅ | python gsc_indexacion.py |
+| Actualizador sitemap | ✅ | python actualizar_sitemap.py --ping |
+| Sitio React | ✅ | npm run dev en Godman_Webpage |
 
 ### Variables de entorno SIEMPRE necesarias
 ```powershell
@@ -137,71 +49,213 @@ $env:ANTHROPIC_API_KEY = "sk-ant-api03-..."
 $env:PYTHONIOENCODING = "utf-8"
 ```
 
-### Rutas críticas
-```
-Generador:  C:\Users\Dell\Documents\goodman_generator\
-Proyecto React: C:\Users\Dell\CascadeProjects\Godman_Webpage\Godman_Webpage\
-Landings en: src\pages\Empresas*.tsx
-Bot: bot_goodman.py
-Detector: detectar_keywords_ambassador.py
-```
-
-### Lo que se construyó esta sesión completa
-
-1. **SEO Ambassador v3** — 7 fuentes de keywords reales
-   - GSC API + Google Suggest + Trends + SerpApi Autocomplete + Related + PAA + Claude API
-   
-2. **Bot Telegram** — control desde celular
-   - /keywords → detecta y carga keywords
-   - /siguiente → aprobar una por una
-   - /estado → ver indexación
-   - /alertas → problemas GSC
-
-3. **41 landings generadas** en src/pages/Empresas*.tsx
-
-4. **Errores corregidos en generar_landing.py**
-   - Sin más `{% for each stat %}` — usa `.map()` 
-   - Constantes de color siempre declaradas
-   - UTF-8 encoding forzado
-
-5. **15 páginas con noindex eliminado** — desbloqueadas para Google
-
-6. **Sitemap enviado a GSC** — Google notificado
-
-7. **GSC API configurada**
-   - Credenciales: `gsc_credentials.json` 
-   - Token guardado: `gsc_token.json` 
-   - Usuario autorizado: `info@goodmantech.com.mx` 
-
-### Problemas conocidos y sus fixes
-
-| Problema | Fix |
-|---------|-----|
-| UnicodeEncodeError emojis | `$env:PYTHONIOENCODING = "utf-8"` |
-| Bot pierde keywords al reiniciar | Usar `/keywords` en Telegram para recargar |
-| `{% for each stat %}` en tsx | Windsurf: buscar en Empresas*.tsx y reemplazar |
-| Bot asyncio Python 3.14 | Ya corregido con `asyncio.set_event_loop()` |
-
-### Próxima sesión — hacer esto primero
+### Arranque rápido próxima sesión
 ```powershell
-# 1. Ir a la carpeta
 cd C:\Users\Dell\Documents\goodman_generator
-
-# 2. Variables de entorno
 $env:PYTHONIOENCODING = "utf-8"
 $env:TELEGRAM_TOKEN = "8743817840:AAG4o964NuLUxFgbLn_aYfYbWbEQfMXa08s"
 $env:SERPAPI_KEY = "4b12977c0516981972e98be6d02f960068883a24a6cd05de84026ae3a4671930"
 $env:ANTHROPIC_API_KEY = "sk-ant-api03-..."
-
-# 3. Iniciar bot
 python bot_goodman.py
 ```
 
-### Pendientes prioritarios próxima sesión
+---
 
-- [ ] Crear `actualizar_sitemap.py` automático
-- [ ] Agregar keywords de Claude/Anthropic al detector
-- [ ] Generar landings: `claude-para-empresas-mexico`, `claude-code-monterrey` 
-- [ ] Verificar en GSC cuántas páginas nuevas se indexaron
-- [ ] Corregir archivos tsx que aún tengan `{% for each stat %}` 
-- [ ] Integrar sitemap en `generar_lote.py`
+## Archivos del sistema
+
+### generar_landing.py ✅ FUNCIONANDO
+Motor principal. Recibe keyword y genera landing page completa.
+```bash
+python generar_landing.py "Como aplicar la IA en mi empresa"
+```
+
+**REGLAS CRÍTICAS en el prompt de Claude (línea ~126):**
+- NUNCA usar {% %} — usar .map() para listas
+- SIEMPRE declarar constantes: DARK, CARD, BLUE, YELLOW, GREEN, SLATE5, SLATE3, SLATE4
+- NUNCA clip-path mayor al 5%
+- Todo TSX debe compilar en Vite + React + TypeScript
+
+**Validación anti-placeholder (línea ~695):**
+```python
+if "{%" in tsx_content or "%}" in tsx_content:
+    print("⚠️ Claude generó sintaxis inválida. Abortando.")
+    return False
+```
+
+**Contexto de marca Claude/Anthropic agregado:**
+- Goodman Tech = único partner Claude en noreste de México
+- Mencionar Claude, Claude Code, Anthropic naturalmente
+- NUNCA mencionar ChatGPT/Gemini positivamente
+
+---
+
+### detectar_keywords_ambassador.py ✅ FUNCIONANDO (v3)
+
+7 fuentes de keywords reales:
+1. Google Search Console API (gsc_credentials.json + gsc_token.json)
+2. Google Suggest público
+3. Google Trends (pytrends)
+4. SerpApi Autocomplete — keywords reales Google MX
+5. SerpApi Related Searches
+6. SerpApi People Also Ask
+7. Claude API — gaps, clusters, ángulos estratégicos
+```bash
+python detectar_keywords_ambassador.py --auto --top 15 --csv
+python detectar_keywords_ambassador.py --solo-serpapi  # sin GSC
+```
+
+**Seeds de Claude/Anthropic para agregar (PENDIENTE):**
+```python
+"claude ia empresas",
+"claude anthropic méxico",
+"claude code automatización",
+"claude vs chatgpt empresas",
+"implementar claude empresa",
+"claude api monterrey",
+```
+
+---
+
+### bot_goodman.py ✅ FUNCIONANDO (v2)
+
+Bot Telegram con control SEO desde celular.
+
+**Token:** variable de entorno TELEGRAM_TOKEN
+
+**Comandos:**
+- /start — menú principal
+- /estado — indexación del sitio
+- /alertas — problemas críticos GSC
+- /keywords — detectar y cargar keywords
+- /siguiente — aprobar/rechazar keywords
+- /pendientes — lista en cola
+- /generadas — páginas creadas
+- /agregar — keyword manual
+
+**Botones inline:** ✅ Landing | 📝 Blog | ✏️ Editar | ❌ Rechazar | ⏭️ Siguiente
+
+**Fix Python 3.14 aplicado:**
+```python
+asyncio.set_event_loop(asyncio.new_event_loop())
+```
+
+**IMPORTANTE:** Las keywords se pierden al reiniciar el bot. Usar /keywords para recargar desde keywords.txt.
+
+---
+
+### gsc_indexacion.py ✅ FUNCIONANDO
+
+Lee CSVs exportados de GSC y genera reporte con alertas.
+```bash
+python gsc_indexacion.py          # usa CSVs locales
+python gsc_indexacion.py --api    # usa GSC API
+```
+
+**GSC API configurada:**
+- Credenciales: gsc_credentials.json (NO en git)
+- Token: gsc_token.json (NO en git)
+- Usuario autorizado: info@goodmantech.com.mx
+- Sitio: https://www.goodmantech.com.mx
+
+---
+
+### actualizar_sitemap.py ✅ NUEVO
+
+Actualiza sitemap.xml automáticamente leyendo App.tsx.
+```bash
+python actualizar_sitemap.py           # solo actualizar
+python actualizar_sitemap.py --ping    # actualizar + notificar Google
+```
+
+Integrado en generar_lote.py — se ejecuta automáticamente al terminar.
+
+---
+
+### generar_lote.py ✅ FUNCIONANDO
+```bash
+python generar_lote.py --limite 5
+python generar_lote.py --blog --limite 3
+python generar_lote.py --auto-detectar --limite 5
+```
+
+Al terminar: actualiza sitemap y notifica Google automáticamente.
+
+---
+
+## Estado del sitio goodmantech.com.mx
+
+| Métrica | Valor al 04/04/2026 |
+|---------|---------------------|
+| Páginas indexadas | 8 (36.4%) |
+| Páginas sin indexar | 14 |
+| Tendencia | 📉 bajando |
+| Impresiones 7 días | 74 |
+| Sitemap enviado GSC | ✅ |
+| noindex eliminado | ✅ 15 páginas |
+| Landings generadas | ~41 en src/pages/Empresas*.tsx |
+
+---
+
+## Problemas conocidos y fixes
+
+| Problema | Fix |
+|----------|-----|
+| UnicodeEncodeError emojis | $env:PYTHONIOENCODING = "utf-8" |
+| Bot pierde keywords al reiniciar | /keywords en Telegram |
+| {% for each stat %} en tsx | PowerShell: Select-String para buscar, luego fix manual |
+| Bot asyncio Python 3.14 | Ya corregido |
+| Git push bloqueado por secrets | Usar .gitignore — nunca commitear gsc_credentials.json ni gsc_token.json |
+
+---
+
+## Fix de emergencia para {% for each stat %} en tsx
+
+Si aparece el error en Vite, ejecutar en PowerShell:
+```powershell
+# Verificar cuáles archivos tienen el problema
+Select-String -Path "C:\Users\Dell\CascadeProjects\Godman_Webpage\Godman_Webpage\src\pages\Empresas*.tsx" -Pattern "\{%" | Select-Object Filename, LineNumber
+
+# Ver líneas exactas del archivo afectado
+$lines = Get-Content "RUTA_DEL_ARCHIVO" -Encoding UTF8
+$lines[244..275] | ForEach-Object -Begin {$i=245} -Process { "$i: $_"; $i++ }
+
+# Luego pedir a Windsurf que corrija ese archivo específico
+```
+
+**NUNCA usar PowerShell regex para reemplazar bloques JSX complejos** — deja código duplicado. Usar Windsurf archivo por archivo.
+
+---
+
+## Pendientes próxima sesión
+
+- [ ] Agregar seeds Claude/Anthropic al detector de keywords
+- [ ] Generar landings: claude-para-empresas-mexico, claude-code-monterrey, implementar-claude-en-mi-empresa
+- [ ] Verificar en GSC cuántas páginas nuevas se indexaron (revisar 48h después)
+- [ ] Integrar auto-carga de keywords al arrancar el bot (sin necesitar /keywords)
+- [ ] Rotar API keys expuestas en esta conversación (Anthropic + SerpApi)
+
+---
+
+## Marca Goodman Tech
+```python
+BRAND = {
+    "nombre":    "Goodman Tech",
+    "ciudad":    "Monterrey, Nuevo León",
+    "dominio":   "https://www.goodmantech.com.mx",
+    "whatsapp":  "528126350902",
+    "email":     "info@goodmantech.com.mx",
+    "telefono":  "+52 81 2635 0902",
+    "contacto":  "Zenon Vilchis",
+    "propuesta": "Implementamos IA en tu empresa con resultados medibles en 90 días",
+    "diferenciador": "Único partner especializado en Claude de Anthropic en el noreste de México",
+}
+```
+
+**Colores:**
+```
+Dark bg:  #0F172A   Card: #1e293b   Card2: #162032
+Blue:     #2463eb   Yellow: #FACC15  Green: #4ade80
+Slate3:   #cbd5e1   Slate4: #94a3b8  Slate5: #64748b
+```
+
+**Fuentes:** Plus Jakarta Sans (títulos) + Inter (cuerpo)
