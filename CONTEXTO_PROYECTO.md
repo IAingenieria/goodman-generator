@@ -28,18 +28,25 @@ Sistema para generar landing pages SEO y artículos de blog de forma automática
 
 ---
 
-## Estado al 04/04/2026 — LEER ANTES DE CUALQUIER SESIÓN
+## Estado al 05/04/2026 — LEER ANTES DE CUALQUIER SESIÓN
 
 ### Qué funciona HOY
 
 | Sistema | Estado | Comando |
 |---------|--------|---------|
 | Bot Telegram | ✅ | python bot_goodman.py |
-| Generador landings | ✅ | python generar_landing.py "keyword" |
+| Generador landings | ✅ **+GEO** | python generar_landing.py "keyword" |
+| Generador blog | ✅ **NUEVO** | python generar_blog.py "¿cuánto cuesta implementar ia?" |
 | Detector keywords | ✅ | python detectar_keywords_ambassador.py --auto --top 15 --csv |
 | Analizador GSC | ✅ | python gsc_indexacion.py |
 | Actualizador sitemap | ✅ | python actualizar_sitemap.py --ping |
+| SEO Pipeline scorer | ✅ | python ../CLAUDE\ AGENTES\ DE\ SEO/seo_pipeline.py |
+| SEO Pipeline + Claude | ✅ | python ../CLAUDE\ AGENTES\ DE\ SEO/seo_pipeline.py --advise |
 | Sitio React | ✅ | npm run dev en Godman_Webpage |
+
+### ⚠️ ADVERTENCIA: actualizar_sitemap.py SOBREESCRIBE sitemap.xml
+`actualizar_sitemap.py` regenera el sitemap completo desde App.tsx — pierde prioridades manuales.
+**Fix pendiente:** integrar las prioridades del dict PRIORIDADES con las entradas existentes.
 
 ### Variables de entorno SIEMPRE necesarias
 ```powershell
@@ -226,13 +233,74 @@ $lines[244..275] | ForEach-Object -Begin {$i=245} -Process { "$i: $_"; $i++ }
 
 ---
 
+## Sesión 05/04/2026 — Cambios aplicados
+
+### generar_landing.py — ACTUALIZADO
+- ✅ **Bug corregido:** eliminado `{% for each stat %}` del template TSX (rompía Vite)
+- ✅ **Sección GEO agregada:** entre FAQ y CTA en cada landing generada
+  - Claude genera 3 campos nuevos en el mismo JSON: `geo_terminos`, `geo_definiciones`, `geo_enlaces_*`
+  - Python ensambla cajas de definición con `id="def-{slug}"` (RAG-citable, apunta Speakable Schema)
+  - Costo adicional: ~150 tokens por landing (mínimo overhead)
+- ✅ **OG, Twitter Cards, geo.region ya estaban** — no se tocaron
+
+### Agente 05 GEO — COMPLETADO en Godman_Webpage
+- ✅ robots.txt: 14 crawlers IA + sitemap URL corregida a www
+- ✅ llms.txt: actualizado con 26+ páginas + guía fan-out
+- ✅ llms-full.txt: creado con 12 definiciones RAG-citables
+- ✅ Artículo fan-out: `/empresas/guia-automatizacion-ia-pymes` (2,500+ palabras, 8 secciones)
+- ✅ Citability Score promedio: 71.8/100 (21/27 páginas publicables)
+- ⚠️ 6 páginas en rojo (score 33-49): EmpresasFinanzas, Operaciones, Ventas, Dirección, RRHH, TI
+
+### seo_pipeline.py — NUEVO en CLAUDE AGENTES DE SEO/
+Orquestador Python que:
+1. Escanea Empresas*.tsx (Python puro, 0 tokens)
+2. Calcula Citability Score 0-100 (Python puro, 0 tokens)
+3. Llama a Claude UNA vez en batch para páginas < 70pts (--advise)
+4. Inyecta FAQs mejoradas directo al TSX
+5. Genera reporte JSON
+
+```powershell
+python seo_pipeline.py              # Solo scan + score
+python seo_pipeline.py --advise     # + Claude mejora páginas < 70pts
+python seo_pipeline.py --page EmpresasDireccion.tsx --advise  # 1 página
+```
+
+Requiere: `ANTHROPIC_API_KEY` en Godman_Webpage/.env
+
+## Sesión 05/04/2026 (tarde) — Cambios adicionales
+
+### generar_blog.py — NUEVO
+- ✅ **Creado** como generador dedicado para artículos de blog
+- URL: `/blog/{slug}` (no `/empresas/`)
+- Componente: `Blog{PascalCase}` (no `Empresas{PascalCase}`)
+- Schema: `BlogPosting` + `FAQPage` JSON-LD (no `ProfessionalService`)
+- Prompt Claude: informacional — responde preguntas directamente (intención del usuario)
+- Secciones: Breadcrumb → Answer-first → 3 H2 → Tips → GEO → FAQ → CTA suave
+- Misma sección GEO (cajas RAG-citables con `id="def-{slug}"`)
+- Uso: `python generar_blog.py "cuánto cuesta implementar ia en una empresa"`
+
+### bot_goodman.py — FIX CRÍTICO
+- ✅ **Bug corregido:** `generar_landing_sync()` ahora llama `generar_blog.py` cuando `tipo="blog"`
+- Antes: `subprocess.run(["python", str(script), keyword])` — `tipo` nunca llegaba al script
+- Ahora: elige el script correcto según tipo y lo llama correctamente
+- Botón `📝 Blog` del Telegram ahora sí genera artículos de blog
+
+---
+
 ## Pendientes próxima sesión
 
-- [ ] Agregar seeds Claude/Anthropic al detector de keywords
+- [ ] **ALTA PRIORIDAD:** Agregar seeds Claude/Anthropic al detector de keywords:
+  ```python
+  "claude ia empresas", "claude anthropic méxico", "claude code automatización",
+  "claude vs chatgpt empresas", "implementar claude empresa", "claude api monterrey"
+  ```
 - [ ] Generar landings: claude-para-empresas-mexico, claude-code-monterrey, implementar-claude-en-mi-empresa
+- [ ] Mejorar páginas departamento (score 33-49): Dirección, RRHH, TI, Ventas, Operaciones, Finanzas
+  → Opción A: manual (editar TSX)  Opción B: `python seo_pipeline.py --advise` con ANTHROPIC_API_KEY
+- [ ] Fix actualizar_sitemap.py: preservar prioridades manuales al regenerar
 - [ ] Verificar en GSC cuántas páginas nuevas se indexaron (revisar 48h después)
-- [ ] Integrar auto-carga de keywords al arrancar el bot (sin necesitar /keywords)
-- [ ] Rotar API keys expuestas en esta conversación (Anthropic + SerpApi)
+- [ ] Rotar API keys expuestas (Anthropic + SerpApi)
+- [ ] Probar generar_landing.py con la nueva sección GEO: `python generar_landing.py "claude para empresas mexico"`
 
 ---
 

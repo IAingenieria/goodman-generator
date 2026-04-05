@@ -184,7 +184,15 @@ Responde SOLO con JSON válido, sin markdown ni explicaciones:
   "cta_h2": "H2 cierre de conversión orientado al cliente",
   "faq_preguntas": ["pregunta 1", "pregunta 2", "pregunta 3", "pregunta 4", "pregunta 5"],
   "faq_respuestas": ["respuesta answer-first 40-60 palabras", "respuesta 2", "respuesta 3", "respuesta 4", "respuesta 5"],
-  "og_image_alt": "texto alt para imagen OG relacionado con keyword"
+  "og_image_alt": "texto alt para imagen OG relacionado con keyword",
+  "geo_terminos": ["Término clave 1 relacionado a la keyword", "Término clave 2", "Término clave 3"],
+  "geo_definiciones": [
+    "Definición directa de 40-60 palabras del término 1. Sin primera persona. Neutral y citable como fuente.",
+    "Definición directa de 40-60 palabras del término 2. Autocontenida, sin contexto previo requerido.",
+    "Definición directa de 40-60 palabras del término 3. Con dato clave que la contextualiza."
+  ],
+  "geo_enlaces_texto": ["texto del enlace 1", "texto del enlace 2", "texto del enlace 3"],
+  "geo_enlaces_url": ["/empresas/ruta-1", "/empresas/ruta-2", "/contact"]
 }}"""
 
     message = client.messages.create(
@@ -300,6 +308,35 @@ def generar_tsx(keyword: str, copy: dict, schema_str: str) -> str:
         f'borderRadius:"12px",padding:"1rem",marginBottom:"8px"}}}}>'
         f'<span style={{{{color:"#{COLORS["YELLOW"]}",fontWeight:700,fontSize:"13px"}}}}>{paso}</span></div>'
         for i, paso in enumerate(copy["proceso_pasos"])
+    )
+
+    # Generar cajas de definición GEO (RAG-citable assets)
+    slug_base = slugify(keyword)
+    geo_terminos    = copy.get("geo_terminos", [])
+    geo_defs        = copy.get("geo_definiciones", [])
+    geo_links_txt   = copy.get("geo_enlaces_texto", ["Agentes de IA", "Automatización con IA", "Diagnóstico Gratuito"])
+    geo_links_url   = copy.get("geo_enlaces_url",   ["/agentes-ia", "/empresas/automatizacion-con-ia-para-empresas", "/contact"])
+
+    geo_def_jsx = "\n".join(
+        f'          <div id="def-{slugify(term)}" style={{{{background:"#{COLORS["CARD2"]}",border:"1px solid #2463eb44",'
+        f'borderRadius:"12px",padding:"1.2rem 1.4rem",marginBottom:"1rem",'
+        f'borderLeft:"4px solid #{COLORS["BLUE"]}"}}}}>\n'
+        f'            <p style={{{{fontFamily:\'"Plus Jakarta Sans",sans-serif\',fontWeight:700,'
+        f'fontSize:"14px",color:"#{COLORS["YELLOW"]}",marginBottom:"0.5rem"}}}}>¿Qué es {term}?</p>\n'
+        f'            <p style={{{{fontSize:"14px",color:"#{COLORS["SLATE3"]}",lineHeight:1.65,margin:0}}}}>{defn}</p>\n'
+        f'            <cite style={{{{fontSize:"11px",color:"#{COLORS["SLATE5"]}",marginTop:"0.5rem",display:"block"}}}}>'
+        f'Fuente: Goodman Tech — goodmantech.com.mx</cite>\n'
+        f'          </div>'
+        for term, defn in zip(geo_terminos, geo_defs)
+        if term and defn
+    ) or f'          <div id="def-{slug_base}" style={{{{background:"#{COLORS["CARD2"]}",border:"1px solid #2463eb44",borderRadius:"12px",padding:"1.2rem 1.4rem",marginBottom:"1rem",borderLeft:"4px solid #{COLORS["BLUE"]}"}}}}><p style={{{{fontFamily:\'"Plus Jakarta Sans",sans-serif\',fontWeight:700,fontSize:"14px",color:"#{COLORS["YELLOW"]}",marginBottom:"0.5rem"}}}}>¿Qué es {keyword}?</p><p style={{{{fontSize:"14px",color:"#{COLORS["SLATE3"]}",lineHeight:1.65,margin:0}}}}>La automatización con IA para empresas utiliza algoritmos de inteligencia artificial para ejecutar tareas repetitivas o complejas sin intervención humana constante, reduciendo costos operativos hasta un 70% y eliminando errores manuales.</p><cite style={{{{fontSize:"11px",color:"#{COLORS["SLATE5"]}",marginTop:"0.5rem",display:"block"}}}}>Fuente: Goodman Tech — goodmantech.com.mx</cite></div>'
+
+    geo_links_jsx = " ".join(
+        f'<a href="{url}" style={{{{fontSize:"12px",color:"#60a5fa",textDecoration:"none",'
+        f'background:"#2463eb11",border:"1px solid #2463eb33",'
+        f'padding:"5px 12px",borderRadius:"100px"}}}}>{txt}</a>'
+        for txt, url in zip(geo_links_txt, geo_links_url)
+        if txt and url
     )
 
     # Generar FAQ items
@@ -456,7 +493,6 @@ const {comp} = () => {{
           {{/* KPIs */}}
           <div style={{{{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',
             gap:'10px', marginTop:'1.5rem' }}}}>
-            {{% for each stat %}}
             <div style={{{{ background: CARD, border:'1px solid #ffffff0d', borderRadius:'12px', padding:'1rem', textAlign:'center' }}}}>
               <p style={{{{ fontFamily:'"Plus Jakarta Sans",sans-serif', fontWeight:900, fontSize:'26px', color: YELLOW, margin:0 }}}}>60%</p>
               <p style={{{{ fontSize:'11px', color: SLATE5, marginTop:'4px' }}}}>ahorro en procesos repetitivos</p>
@@ -519,6 +555,28 @@ const {comp} = () => {{
             Lo que preguntan los directores
           </h2>
           {faq_jsx}
+        </div>
+      </section>
+
+      {{/* ═══ GEO — SECCIÓN CITABLE POR IA (ChatGPT, Perplexity, Claude) ═══ */}}
+      <section style={{{{ padding:'2.5rem 1.5rem', background: DARK }}}}>
+        <div style={{{{ maxWidth:'860px', margin:'0 auto' }}}}>
+          <p style={{{{ fontSize:'10px', fontWeight:700, letterSpacing:'0.12em',
+            textTransform:'uppercase', color:'#a78bfa', marginBottom:'0.6rem' }}}}>
+            GLOSARIO PARA IA
+          </p>
+          <h2 style={{{{ fontFamily:'"Plus Jakarta Sans", sans-serif', fontWeight:900,
+            fontSize:'clamp(16px,2.5vw,22px)', color:'white', marginBottom:'1.2rem' }}}}>
+            Conceptos clave sobre {keyword}
+          </h2>
+          {geo_def_jsx}
+          <div style={{{{ marginTop:'1.2rem', display:'flex', flexWrap:'wrap', gap:'8px' }}}}>
+            <p style={{{{ fontSize:'11px', color: SLATE5, width:'100%',
+              textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'4px' }}}}>
+              Explora más:
+            </p>
+            {geo_links_jsx}
+          </div>
         </div>
       </section>
 
@@ -713,20 +771,63 @@ def main():
         f.write(f"- **H1:** {copy['h1']}\n")
         f.write(f"- **URL:** {canonical(keyword)}\n")
 
-    # ── 6. Reporte final ─────────────────────────────────────────────────────
+    # ── 6. Auto-registrar en App.tsx (NUEVO - Evita olvidos) ────────────────
+    app_tsx_path = r"C:\Users\Dell\CascadeProjects\Godman_Webpage\Godman_Webpage\src\App.tsx"
+    
+    if os.path.exists(app_tsx_path):
+        try:
+            with open(app_tsx_path, 'r', encoding='utf-8') as f:
+                app_content = f.read()
+            
+            # Verificar si ya está registrado
+            if comp not in app_content:
+                # Agregar import después de EmpresasEmbajadoresIa
+                import_marker = 'import EmpresasEmbajadoresIa from "./pages/EmpresasEmbajadoresIa";'
+                if import_marker in app_content:
+                    app_content = app_content.replace(
+                        import_marker,
+                        import_marker + '\n' + registros['app_import']
+                    )
+                
+                # Agregar route antes de LeadsInstantly section
+                route_marker = '            {/* ── LeadsInstantly ────────────────────────────────────────── */}'
+                if route_marker in app_content:
+                    app_content = app_content.replace(
+                        route_marker,
+                        '            ' + registros['app_route'] + '\n\n' + route_marker
+                    )
+                
+                # Guardar App.tsx actualizado
+                with open(app_tsx_path, 'w', encoding='utf-8') as f:
+                    f.write(app_content)
+                
+                print(f"\n✅ RUTA AUTO-REGISTRADA EN App.tsx")
+                print(f"   → Import agregado")
+                print(f"   → Route agregada: /empresas/{slug(keyword)}")
+            else:
+                print(f"\n⚠️  Ruta ya existía en App.tsx (omitido)")
+        except Exception as e:
+            print(f"\n⚠️  No se pudo auto-registrar en App.tsx: {e}")
+            print(f"   → Usa REGISTROS.md para registrar manualmente")
+    else:
+        print(f"\n⚠️  App.tsx no encontrado en ruta esperada")
+        print(f"   → Usa REGISTROS.md para registrar manualmente")
+
+    # ── 7. Reporte final ─────────────────────────────────────────────────────
     print("=" * 60)
     print(f"✅ LANDING GENERADA EXITOSAMENTE")
     print("=" * 60)
     print(f"\n📁 Archivos creados en: {out_dir}/")
     print(f"   → {comp}.tsx         (pegar en src/pages/)")
-    print(f"   → REGISTROS.md       (instrucciones para App.tsx y Header.tsx)")
+    print(f"   → REGISTROS.md       (backup de registros)")
     print(f"\n📋 Pasos para activar:")
     print(f"   1. Copia {comp}.tsx → src/pages/")
-    print(f"   2. Abre REGISTROS.md y pega cada bloque en el archivo indicado")
-    print(f"   3. npm run build && npm run preview")
+    print(f"   2. ✅ Ruta YA REGISTRADA en App.tsx automáticamente")
+    print(f"   3. git add . && git commit -m 'Feat: {keyword}' && git push")
     print(f"\n🌐 URL final: {canonical(keyword)}")
     print(f"\n💡 Tokens usados: ~1,000 (solo copy creativo via Haiku)")
-    print(f"   Sin tokens: Schema, OG, meta tags, TSX completo, registros\n")
+    print(f"   Sin tokens: Schema, OG, meta tags, TSX completo, registros")
+    print(f"\n🎯 NUEVO: Auto-registro en App.tsx activado (evita 404s)\n")
 
 
 if __name__ == "__main__":

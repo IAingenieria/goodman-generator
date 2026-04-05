@@ -24,6 +24,12 @@ Alertas automáticas:
   → Cada 24h revisa indexación y notifica si algo cambió
   → Alerta inmediata si páginas indexadas bajan
   → Notifica cuando una landing nueva es generada
+  
+  
+  
+  
+  
+  
 """
 
 import os, json, logging, asyncio, subprocess, csv
@@ -183,22 +189,30 @@ def formatear_estado(e: dict) -> str:
     )
 
 def generar_landing_sync(keyword: str, tipo: str = "landing") -> tuple[bool, str]:
-    """Llama a generar_landing.py de forma síncrona."""
-    script = GENERATOR_PATH / "generar_landing.py"
-    if not script.exists():
-        return False, f"No se encontró generar_landing.py en {GENERATOR_PATH}"
+    """
+    Llama a generar_landing.py (tipo=landing) o generar_blog.py (tipo=blog).
+    Fix: antes el tipo nunca llegaba al subprocess — ahora se elige el script correcto.
+    """
+    if tipo == "blog":
+        script = GENERATOR_PATH / "generar_blog.py"
+        if not script.exists():
+            return False, f"No se encontró generar_blog.py en {GENERATOR_PATH}"
+    else:
+        script = GENERATOR_PATH / "generar_landing.py"
+        if not script.exists():
+            return False, f"No se encontró generar_landing.py en {GENERATOR_PATH}"
     try:
         result = subprocess.run(
             ["python", str(script), keyword],
             cwd=str(GENERATOR_PATH),
-            capture_output=True, text=True, timeout=120
+            capture_output=True, text=True, timeout=180
         )
         if result.returncode == 0:
             return True, result.stdout[-300:] if result.stdout else "Generado correctamente"
         else:
             return False, result.stderr[-300:] if result.stderr else "Error desconocido"
     except subprocess.TimeoutExpired:
-        return False, "Timeout: la generación tardó más de 2 minutos"
+        return False, "Timeout: la generación tardó más de 3 minutos"
     except Exception as e:
         return False, str(e)
 
