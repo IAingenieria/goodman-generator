@@ -1,0 +1,51 @@
+{
+  "secciones": [
+    {
+      "titulo": "Introducción",
+      "contenido": [
+        "¿Te has preguntado alguna vez cómo la Inteligencia Artificial (IA) puede transformar tu empresa en menos de 3 meses?",
+        "En Goodman Tech, con base en Monterrey, México, implementamos IA con resultados en 90 días. Nuestro enfoque está en generar ROI significativo a través de la adopción de IA, especialmente con <strong>Claude AI</strong> y Anthropic.",
+        "En este artículo, te guiaremos por el camino de la IA, te mostraremos casos de uso específicos para México y te explicaremos cómo formamos embajadores internos de IA en tu empresa."
+      ]
+    },
+    {
+      "titulo": "¿Qué es Claude AI y Anthropic?",
+      "contenido": [
+        "<strong>Claude AI</strong> es una plataforma de IA que permite a las empresas automatizar procesos, tomar decisiones basadas en datos y mejorar la eficiencia operativa. <strong>Anthropic</strong>, por otro lado, es una organización que busca entender y mejorar los modelos de aprendizaje automático, un componente clave de la IA.",
+        "Combinando estas dos potentes herramientas, en Goodman Tech te ayudamos a transformar digitalmente tu negocio."
+      ],
+      "lista": [
+        "Automatización de procesos con <strong>Claude AI</strong>",
+        "Toma de decisiones basada en datos con <strong>Anthropic</strong>"
+      ]
+    },
+    {
+      "titulo": "Casos de uso en México",
+      "contenido": [
+        "México, y en particular Monterrey, ha sido un terreno fértil para la implementación de IA. Con <strong>Claude AI</strong>, las empresas han automatizado procesos que van desde el servicio al cliente hasta la gestión de inventario.",
+        "Por ejemplo, una empresa de logística en Monterrey logró reducir los tiempos de despacho en un 30% al implementar <strong>Claude AI</strong> para predecir y optimizar las rutas de entrega."
+      ]
+    },
+    {
+      "titulo": "Enfoque en ROI y 90 días",
+      "contenido": [
+        "En Goodman Tech, creemos en brindar resultados rápidos y tangibles. Por eso nos enfocamos en lograr un ROI significativo en 90 días a través de la implementación de <strong>Claude AI</strong> y Anthropic.",
+        "El retorno de inversión no se trata solo de ganancias financieras. También se trata de eficiencia operativa, satisfacción del cliente y mejora de la toma de decisiones."
+      ]
+    },
+    {
+      "titulo": "Creando Embajadores Internos de IA",
+      "contenido": [
+        "Adoptar IA no es solo una cuestión de tecnología, sino también de cultura. En Goodman Tech, formamos embajadores internos de IA en tu empresa. Estos son empleados que comprenden el potencial de la IA y pueden ayudar a otros a adoptarla.",
+        "La formación de embajadores internos de IA es un componente clave para una adopción exitosa y sostenible de la IA en tu empresa."
+      ]
+    }
+  ],
+  "tags": [
+    "Goodman Tech",
+    "Claude AI",
+    "Anthropic",
+    "IA para empresas",
+    "Transformación digital"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "secciones": [
+    {
+      "titulo": "Introducción",
+      "contenido": [
+        "¿Alguna vez te has preguntado cuál es la diferencia entre servicios de IA y software de IA? ¿Y cuál es la mejor opción para tu empresa?",
+        "En la era de la transformación digital, la inteligencia artificial (IA) se ha convertido en una herramienta crucial para las empresas. Aquí en Goodman Tech, con sede en Monterrey, México, nos especializamos en la implementación de soluciones de IA que brindan resultados en tan solo 90 días.",
+        "En este artículo, exploraremos las diferencias entre los servicios de IA y el software de IA, y te ayudaremos a entender cuál es la mejor opción para tu empresa. "
+      ]
+    },
+    {
+      "titulo": "¿Qué es un servicio de IA?",
+      "contenido": [
+        "Un servicio de IA es un conjunto de soluciones que se brindan a las empresas para abordar desafíos específicos. Estos servicios pueden incluir la creación de modelos de IA personalizados, la implementación de soluciones de IA existentes y el entrenamiento de personal para usar estas soluciones. <strong>Claude AI</strong> es un ejemplo de un proveedor de servicios de IA.",
+        "Los servicios de IA pueden ser beneficiosos para empresas que tienen desafíos complejos que no pueden ser resueltos por el software de IA existente. A través de la personalización y el soporte continuo, los servicios de IA pueden proporcionar una solución más precisa y efectiva."
+      ],
+      "lista": [
+        "<strong>Beneficios de los servicios de IA</strong>: Soluciones personalizadas, soporte continuo, capacidad para abordar desafíos complejos",
+        "<strong>Desventajas de los servicios de IA</strong>: Pueden ser costosos, requieren tiempo para implementar"
+      ]
+    },
+    {
+      "titulo": "¿Qué es un software de IA?",
+      "contenido": [
+        "El software de IA es un producto preempaquetado que utiliza la inteligencia artificial para llevar a cabo tareas específicas. Este software puede ser utilizado por empresas para automatizar procesos, analizar datos y mejorar la eficiencia. Un ejemplo de software de IA es <strong>Anthropic</strong>.",
+        "El software de IA puede ser una opción efectiva para las empresas que tienen desafíos más sencillos o bien definidos que pueden ser abordados por las aplicaciones existentes. Además, el software de IA a menudo es más rápido y menos costoso de implementar que los servicios de IA."
+      ],
+      "lista": [
+        "<strong>Beneficios del software de IA</strong>: Rápido de implementar, menos costoso, puede ser eficaz para desafíos bien definidos",
+        "<strong>Desventajas del software de IA</strong>: Menos personalizable, puede no ser adecuado para desafíos complejos"
+      ]
+    },
+    {
+      "titulo": "Casos de uso en México",
+      "contenido": [
+        "En México, tanto los servicios como el software de IA están siendo utilizados en una variedad de industrias. Por ejemplo, en el sector de la manufactura, empresas en Monterrey están utilizando la IA para mejorar la eficiencia de la producción y reducir los costos. En el sector financiero, las empresas están utilizando la IA para detectar el fraude y mejorar la toma de decisiones.",
+        "Tanto los servicios de IA como el software de IA pueden ofrecer un retorno de inversión (ROI) significativo. En Goodman Tech, nos enfocamos en proporcionar resultados en 90 días, lo que permite a las empresas ver un ROI más rápido."
+      ]
+    },
+    {
+      "titulo": "Conclusión",
+      "contenido": [
+        "La elección entre servicios de IA y software de IA depende de las necesidades específicas de tu empresa. Si tus desafíos son complejos y requieren una solución personalizada, los servicios de IA pueden ser la mejor opción. Si tus desafíos son más sencillos y pueden ser abordados por las aplicaciones existentes, el software de IA puede ser una opción más eficiente y rentable.",
+        "En Goodman Tech, creemos en formar embajadores internos de IA en tu empresa. Esto significa que no solo implementamos soluciones de IA, sino que también formamos a tu personal para que puedan usar estas soluciones de manera efectiva y sostenible. Creemos que la IA es más que una herramienta; es una parte integral de la transformación digital."
+      ]
+    }
+  ],
+  "tags": [
+    "IA",
+    "Transformación Digital",
+    "Servicios de IA",
+    "Software de IA",
+    "Goodman Tech",
+    "Claude AI",
+    "Anthropic",
+    "ROI",
+    "Transformación Digital en México"
+  ]
+}

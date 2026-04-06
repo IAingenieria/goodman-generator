@@ -1,0 +1,68 @@
+{
+  "secciones": [
+    {
+      "titulo": "Introducción",
+      "contenido": [
+        "¿Alguna vez te has preguntado cómo la inteligencia artificial puede potenciar el crecimiento de tu PyME en México? ",
+        "Con el auge de la tecnología y la transformación digital en curso, la IA está remodelando el panorama empresarial mexicano. En Goodman Tech, con sede en Monterrey, hemos estado a la vanguardia de este cambio, ayudando a las PyMEs a embarcarse en la adopción de IA.",
+        "En este artículo, te guiaremos sobre cómo empezar a implementar la IA en tu empresa en 2026, con un enfoque en obtener resultados en los primeros 90 días. También presentaremos algunos casos de uso concretos y relevantes para México y Monterrey."
+      ]
+    },
+    {
+      "titulo": "Entendiendo la Inteligencia Artificial",
+      "contenido": [
+        "Para empezar, es esencial entender qué es la inteligencia artificial y cómo puede beneficiar tu negocio. En términos sencillos, la IA es una rama de la informática que busca crear sistemas capaces de realizar tareas que normalmente requieren la inteligencia humana, como el reconocimiento de voz, el aprendizaje, la planificación y la comprensión del lenguaje natural.",
+        "La aplicación de IA en tu PyME puede automatizar tareas rutinarias, mejorar la eficiencia, proporcionar insights valiosos a través del análisis de datos y mucho más. En Goodman Tech, utilizamos plataformas avanzadas como <strong>Claude AI</strong> y <strong>Anthropic</strong> para implementar soluciones de IA personalizadas."
+      ],
+      "lista": [
+        "Mejora de eficiencia con <strong>automatización de tareas</strong>",
+        "Insights valiosos a través de <strong>análisis de datos</strong>"
+      ]
+    },
+    {
+      "titulo": "Formando Embajadores Internos de IA",
+      "contenido": [
+        "En Goodman Tech, creemos en la importancia de formar embajadores internos de IA. Estos embajadores son empleados que comprenden cómo la IA puede aportar a los objetivos del negocio y están capacitados para liderar la adopción de IA dentro de la empresa.",
+        "La formación de embajadores internos de IA no solo garantiza que la implementación de la IA esté alineada con los objetivos de la empresa, sino que también facilita la adopción de la tecnología por parte de otros empleados."
+      ],
+      "lista": [
+        "Embajadores internos de IA para <strong>alinear la IA con los objetivos del negocio</strong>",
+        "Facilitar la <strong>adopción de la tecnología</strong> por parte de otros empleados"
+      ]
+    },
+    {
+      "titulo": "Implementación de IA con ROI en 90 días",
+      "contenido": [
+        "Uno de los aspectos clave de nuestra metodología en Goodman Tech es lograr un retorno de inversión (ROI) en 90 días. Para lograr esto, comenzamos identificando los desafíos de tu negocio que la IA puede resolver y luego implementamos soluciones personalizadas que ofrecen resultados rápidos.",
+        "Además, medimos continuamente el rendimiento y ajustamos las soluciones de IA según sea necesario para garantizar que estés obteniendo el máximo valor de tu inversión en IA."
+      ],
+      "lista": [
+        "Identificación de <strong>desafíos del negocio</strong> que la IA puede resolver",
+        "Implementación de <strong>soluciones de IA personalizadas</strong> para resultados rápidos"
+      ]
+    },
+    {
+      "titulo": "Casos de Uso en México",
+      "contenido": [
+        "En México, varias PyMEs ya están aprovechando la IA para impulsar su crecimiento. Por ejemplo, algunas empresas de logística en Monterrey están utilizando IA para optimizar sus rutas de entrega, reduciendo los costos y mejorando la eficiencia.",
+        "Además, las empresas de comercio electrónico están utilizando AI para personalizar las recomendaciones de productos para sus clientes, lo que aumenta las ventas y mejora la experiencia del cliente."
+      ],
+      "lista": [
+        "Optimización de rutas de entrega en <strong>empresas de logística</strong>",
+        "Personalización de recomendaciones en <strong>empresas de comercio electrónico</strong>"
+      ]
+    }
+  ],
+  "tags": [
+    "IA",
+    "Transformación Digital",
+    "PyMEs",
+    "México",
+    "Monterrey",
+    "Goodman Tech",
+    "Claude AI",
+    "Anthropic",
+    "ROI",
+    "Embajadores de IA"
+  ]
+}
