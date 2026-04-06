@@ -41,8 +41,8 @@ GSC_CREDENTIALS = GENERATOR_PATH / "gsc_credentials.json"
 GSC_TOKEN       = GENERATOR_PATH / "gsc_token.json"
 SITE_URL        = "https://www.goodmantech.com.mx"
 
-SERPAPI_KEY  = os.environ.get("SERPAPI_KEY",       "4b12977c0516981972e98be6d02f960068883a24a6cd05de84026ae3a4671930")
-ANTHROPIC_KEY= os.environ.get("ANTHROPIC_API_KEY", "")
+SERPAPI_KEY  = os.environ.get("SERPAPI_KEY")
+ANTHROPIC_KEY= os.environ.get("ANTHROPIC_API_KEY")
 CLAUDE_MODEL = "claude-sonnet-4-6"
 
 # Seeds para todas las fuentes
