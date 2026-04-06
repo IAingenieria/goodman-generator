@@ -468,9 +468,10 @@ https://www.goodmantech.com.mx/blog/ia-empresas/{slug}
 
 ## Pendientes próxima sesión
 
-- [ ] **CRÍTICO:** Rotar API keys expuestas en Git:
-  - SerpAPI key: `4b12977c...` (expuesta en historial)
-  - Generar nueva key en https://serpapi.com/manage-api-key
+- [x] **CRÍTICO:** Rotar API keys expuestas en Git:
+  - SerpAPI key: ✅ ROTADA el 05/04/2026
+  - Nueva key configurada en variables de entorno
+  - Ver: CONFIGURAR_API_KEYS.md para instrucciones
 - [ ] **ALTA PRIORIDAD:** Agregar 15 URLs de blogs a Google Search Console:
   - Usar sitemap: `https://www.goodmantech.com.mx/sitemap-blogs.xml`
   - O inspección manual de cada URL
