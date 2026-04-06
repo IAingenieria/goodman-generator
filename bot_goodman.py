@@ -232,8 +232,11 @@ def cargar_keywords_desde_archivo() -> list[dict]:
 def teclado_keyword(idx: int, total: int) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup([
         [
-            InlineKeyboardButton("✅ Landing", callback_data=f"aprobar_landing_{idx}"),
-            InlineKeyboardButton("📝 Blog",    callback_data=f"aprobar_blog_{idx}"),
+            InlineKeyboardButton("🎯 Ambos (Landing + Blog)", callback_data=f"aprobar_ambos_{idx}"),
+        ],
+        [
+            InlineKeyboardButton("✅ Solo Landing", callback_data=f"aprobar_landing_{idx}"),
+            InlineKeyboardButton("📝 Solo Blog",    callback_data=f"aprobar_blog_{idx}"),
         ],
         [
             InlineKeyboardButton("✏️ Editar",   callback_data=f"editar_{idx}"),
@@ -469,6 +472,42 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     kw = pendientes[idx]
 
+    if accion == "aprobar_ambos":
+        # Generar AMBOS: landing + blog
+        await msg.reply_text(f"🎯 Generando Landing + Blog:\n`{kw['query']}`\n\nEsto tomará ~2 minutos...", parse_mode="Markdown")
+        
+        # Generar landing primero
+        ok_landing, detalle_landing = await asyncio.get_event_loop().run_in_executor(
+            None, generar_landing_sync, kw["query"], "landing"
+        )
+        
+        # Generar blog después
+        ok_blog, detalle_blog = await asyncio.get_event_loop().run_in_executor(
+            None, generar_landing_sync, kw["query"], "blog"
+        )
+        
+        # Reportar resultados
+        if ok_landing and ok_blog:
+            estado_bot["keywords_generadas"].append({**kw, "tipo": "ambos"})
+            pendientes.pop(idx)
+            await msg.reply_text(
+                f"✅ ¡Generados exitosamente!\n\n"
+                f"📝 Landing: {detalle_landing[-200:]}\n\n"
+                f"📝 Blog: {detalle_blog[-200:]}",
+                parse_mode="Markdown"
+            )
+        else:
+            errores = []
+            if not ok_landing:
+                errores.append(f"❌ Landing: {detalle_landing[-200:]}")
+            if not ok_blog:
+                errores.append(f"❌ Blog: {detalle_blog[-200:]}")
+            await msg.reply_text("\n\n".join(errores), parse_mode="Markdown")
+        
+        if pendientes:
+            await cmd_siguiente(update, context)
+        return
+    
     if accion in ("aprobar_landing", "aprobar_blog"):
         tipo = "blog" if accion == "aprobar_blog" else "landing"
         await msg.reply_text(f"⚙️ Generando {tipo}:\n`{kw['query']}`\n\nEspera...", parse_mode="Markdown")

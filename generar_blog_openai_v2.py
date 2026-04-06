@@ -93,6 +93,12 @@ REQUISITOS:
     }},
     // ... más secciones (total 5-6)
   ],
+  "geo_terminos": ["término1", "término2", "término3"],
+  "geo_definiciones": {{
+    "término1": "Definición clara y concisa (1-2 oraciones) optimizada para citación por IA",
+    "término2": "Definición clara y concisa (1-2 oraciones) optimizada para citación por IA",
+    "término3": "Definición clara y concisa (1-2 oraciones) optimizada para citación por IA"
+  }},
   "tags": ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5"]
 }}
 
@@ -144,9 +150,13 @@ def generar_tsx_blog(titulo, contenido_json, categoria):
     
     secciones = contenido_json.get('secciones', [])
     tags = contenido_json.get('tags', [])
+    geo_terminos = contenido_json.get('geo_terminos', [])
+    geo_definiciones = contenido_json.get('geo_definiciones', {})
     
     # Generar títulos de secciones para TOC
     titulos_secciones = [s['titulo'] for s in secciones]
+    if geo_terminos:
+        titulos_secciones.append('Glosario IA')
     
     # Generar JSX del contenido
     contenido_jsx = []
@@ -196,6 +206,32 @@ def generar_tsx_blog(titulo, contenido_json, categoria):
           ctaUrl="/empresas/embajadores-ia"
           type="intermediate"
         />''')
+    
+    # Agregar sección GEO (definiciones RAG-citables) antes del CTA final
+    if geo_terminos and geo_definiciones:
+        contenido_jsx.append(f'''
+
+        {/* Sección GEO - Definiciones RAG-citables */}
+        <h2 id="seccion-{len(secciones)}" className="text-3xl font-bold mb-6 mt-12" style={{{{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}}}>
+          Glosario IA
+        </h2>
+        <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+          Definiciones clave para entender mejor la inteligencia artificial en empresas:
+        </p>
+        <div className="grid grid-cols-1 gap-4 mb-8">''')
+        
+        for termino in geo_terminos:
+            if termino in geo_definiciones:
+                definicion = geo_definiciones[termino]
+                termino_slug = slugify(termino)
+                contenido_jsx.append(f'''
+          <div id="def-{termino_slug}" className="bg-slate-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <h3 className="font-bold text-xl text-slate-900 mb-2">{termino}</h3>
+            <p className="text-slate-700">{definicion}</p>
+          </div>''')
+        
+        contenido_jsx.append('''
+        </div>''')
     
     # Generar componente completo
     tsx = f'''import {{ Helmet }} from 'react-helmet-async';
