@@ -253,6 +253,39 @@ const {comp_name} = () => {{
         <meta name="description" content="Descubre cómo {titulo.lower()} con Goodman Tech en Monterrey. Casos reales, tecnologías como Claude AI y resultados en 90 días." />
         <meta name="keywords" content="{', '.join(tags)}" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+        <script type="application/ld+json">
+          {{`
+            {{
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": "{titulo}",
+              "description": "Descubre cómo {titulo.lower()} con Goodman Tech en Monterrey. Casos reales, tecnologías como Claude AI y resultados en 90 días.",
+              "image": "https://www.goodmantech.com.mx/og-image.jpg",
+              "author": {{
+                "@type": "Organization",
+                "name": "Goodman Tech",
+                "url": "https://www.goodmantech.com.mx"
+              }},
+              "publisher": {{
+                "@type": "Organization",
+                "name": "Goodman Tech",
+                "logo": {{
+                  "@type": "ImageObject",
+                  "url": "https://www.goodmantech.com.mx/logo.png"
+                }}
+              }},
+              "datePublished": "{date.today().isoformat()}",
+              "dateModified": "{date.today().isoformat()}",
+              "mainEntityOfPage": {{
+                "@type": "WebPage",
+                "@id": "https://www.goodmantech.com.mx/blog/{categoria}/{slug}"
+              }},
+              "articleSection": "{CATEGORIAS.get(categoria, categoria)}",
+              "keywords": "{', '.join(tags)}",
+              "inLanguage": "es-MX"
+            }}
+          `}}
+        </script>
       </Helmet>
 
       <BlogLayout
