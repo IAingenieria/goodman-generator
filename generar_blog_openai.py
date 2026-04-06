@@ -140,7 +140,7 @@ Genera el artículo completo ahora:"""
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4-turbo-preview",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "Eres un experto en IA empresarial y redacción de contenido técnico para empresas mexicanas."},
                 {"role": "user", "content": prompt}
